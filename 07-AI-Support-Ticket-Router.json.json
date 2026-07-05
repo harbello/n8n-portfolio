@@ -1,0 +1,265 @@
+{
+  "name": "07-AI-Support-Ticket-Router.json",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -496,
+        -112
+      ],
+      "id": "a1f6d34f-db3f-45ab-81bd-5264ed48c16e",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8f14fbda-0dd2-4e90-91eb-0f718ffbf86f",
+              "name": "Complaint",
+              "value": "Light no dey on",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -288,
+        -112
+      ],
+      "id": "f207a594-2e42-42ba-aa4b-674525712677",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.Complaint }}",
+        "options": {
+          "systemMessage": "You are a facilities management assistant.\n\nA customer will submit a maintenance complaint.\n\nReturn ONLY valid JSON.\n\n{\n\"professional_complaint\":\"\",\n\"category\":\"\",\n\"priority\":\"\",\n\"department\":\"\",\n\"suggested_reply\":\"\"\n}\n\nRules:\n\n- Rewrite the complaint professionally.\n- Choose one category:\n  HVAC\n  Electrical\n  Plumbing\n  Cleaning\n  Security\n  IT\n  General Maintenance\n\n- Priority must be:\n  Low\n  Medium\n  High\n\n- Department should match the category.\n\n- suggested_reply should be polite and under 40 words.\n\nReturn JSON only."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -80,
+        -112
+      ],
+      "id": "8790ddea-1945-44c7-90db-01f6a6558c93",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        0,
+        64
+      ],
+      "id": "e3a23733-4c97-4968-973a-f039589b136d",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "6wstAAyveV0wZ0SU",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = JSON.parse($json.output);\n\nreturn {\n  json: {\n    complaint: $('Edit Fields').first().json.Complaint,\n    professional_complaint: data.professional_complaint,\n    category: data.category,\n    priority: data.priority,\n    department: data.department,\n    suggested_reply: data.suggested_reply\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        272,
+        -112
+      ],
+      "id": "54278208-ac87-4aa8-bab2-7ad024ac7b83",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "10tQo5WV_CkQHnQEZJuueI88Ff_iRq_XoVu6dpNiH-Z8",
+          "mode": "list",
+          "cachedResultName": "AI Support Tickets",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/10tQo5WV_CkQHnQEZJuueI88Ff_iRq_XoVu6dpNiH-Z8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/10tQo5WV_CkQHnQEZJuueI88Ff_iRq_XoVu6dpNiH-Z8/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Complaint": "={{ $json.complaint }}",
+            "profressional Complaint": "={{ $json.professional_complaint }}",
+            "category": "={{ $json.category }}",
+            "Priority": "={{ $json.priority }}",
+            "Department": "={{ $json.department }}",
+            "Suggested Reply": "={{ $json.suggested_reply }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Complaint",
+              "displayName": "Complaint",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "profressional Complaint",
+              "displayName": "profressional Complaint",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Priority",
+              "displayName": "Priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Department",
+              "displayName": "Department",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Suggested Reply",
+              "displayName": "Suggested Reply",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        480,
+        -112
+      ],
+      "id": "8ce4fab9-1ebc-4a5d-967a-c800f06591ca",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "AyAiyAwHU06svwU7",
+          "name": "Google Sheets account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "0737df0a-967d-4950-bb25-699961358229",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "74989c349b203d0103a0b04f3b5ac405bd3def81c403965f90a53762a847a16e"
+  },
+  "nodeGroups": [],
+  "id": "DlDj3LOEbpXem0Hs",
+  "tags": []
+}
