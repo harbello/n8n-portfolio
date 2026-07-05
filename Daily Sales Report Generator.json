@@ -1,0 +1,151 @@
+{
+  "name": "Daily Sales Report Generator",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 2
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -448,
+        -80
+      ],
+      "id": "4dc7b3fd-1f70-40a6-b55b-de57ac1c9ca1",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1U2_U8mRy5LdZPU2hj1V8M0y-mDJ4GZpF0PladDt6DJM",
+          "mode": "list",
+          "cachedResultName": "Sales Report",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1U2_U8mRy5LdZPU2hj1V8M0y-mDJ4GZpF0PladDt6DJM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sales",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1U2_U8mRy5LdZPU2hj1V8M0y-mDJ4GZpF0PladDt6DJM/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Date",
+              "lookupValue": "={{ new Date().toISOString().split('T')[0] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -240,
+        -80
+      ],
+      "id": "815eec8f-4326-4530-b390-6d92c7962874",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "AyAiyAwHU06svwU7",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\nlet totalRevenue = 0;\nlet totalQuantity = 0;\nconst productCount = {};\n\nfor (const item of items) {\n\n  const quantity = Number(item.json.Quality);\n  const price = Number(item.json.Price);\n\n  totalRevenue += quantity * price;\n  totalQuantity += quantity;\n\n  const product = item.json.Product;\n\n  if (!productCount[product]) {\n    productCount[product] = 0;\n  }\n\n  productCount[product] += quantity;\n}\n\nlet bestProduct = \"\";\nlet bestSold = 0;\n\nfor (const product in productCount) {\n  if (productCount[product] > bestSold) {\n    bestSold = productCount[product];\n    bestProduct = product;\n  }\n}\n\nreturn [\n{\njson:{\nsales: items.length,\ntotalRevenue,\ntotalQuantity,\nbestProduct,\nbestSold\n}\n}\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -32,
+        -80
+      ],
+      "id": "7b48454f-5f7f-41a3-b25b-7e5ba836fcd4",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "sendTo": "haarbello@gmail.com",
+        "subject": "Daily Sales Report - 2026-07-05",
+        "message": "=<h2>📊 Daily Sales Report</h2>\n\n<hr>\n\n<p><strong>Total Sales:</strong> {{$json.sales}}</p>\n\n<p><strong>Total Revenue:</strong> AED {{$json.totalRevenue}}</p>\n\n<p><strong>Total Quantity Sold:</strong> {{$json.totalQuantity}}</p>\n\n<p><strong>Best Selling Product:</strong> {{$json.bestProduct}}</p>\n\n<p><strong>Units Sold:</strong> {{$json.bestSold}}</p>\n\n<p><strong>Transactions Processed:</strong> {{$json.sales}}</p>\n\n<hr>\n\n<p>Generated automatically by n8n.</p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        176,
+        -80
+      ],
+      "id": "6dc0b2a1-e43a-4dcd-82c4-9359838fc015",
+      "name": "Send a message",
+      "webhookId": "18459a2f-d5a0-4b23-8d1e-332300112634",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "opzViiywkLhdvjNj",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "ebfe54f0-2d90-4dc4-9352-16ad62cc7365",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "74989c349b203d0103a0b04f3b5ac405bd3def81c403965f90a53762a847a16e"
+  },
+  "nodeGroups": [],
+  "id": "ts6BwJS4fBwRmvlF",
+  "tags": []
+}
