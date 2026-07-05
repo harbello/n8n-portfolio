@@ -1,0 +1,114 @@
+{
+  "name": "AI Email Classifier",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -448,
+        -96
+      ],
+      "id": "17c32bec-5fcc-4b63-b7ba-a968d4ea2098",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "filters": {
+          "labelIds": [
+            "INBOX"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -240,
+        -96
+      ],
+      "id": "e3a97f55-e3c4-43bc-a727-ccc14fc918ee",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "opzViiywkLhdvjNj",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "0fd71106-db58-4ec2-9877-0dbce243cebd",
+              "leftValue": "={{ $json.snippet }}",
+              "rightValue": "air",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -32,
+        -96
+      ],
+      "id": "a20d7e8f-f274-49fe-85fc-58e58ceee6e3",
+      "name": "If"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "13fe59eb-4049-4f42-bc3c-6d0c1d2a9b7a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "74989c349b203d0103a0b04f3b5ac405bd3def81c403965f90a53762a847a16e"
+  },
+  "nodeGroups": [],
+  "id": "UeXsZP5CmSUurD5e",
+  "tags": [
+    {
+      "updatedAt": "2026-07-04T16:04:46.659Z",
+      "createdAt": "2026-07-04T16:04:46.659Z",
+      "id": "VfTdv2DaaZjYOgZs",
+      "name": "AI Emai Classifier"
+    }
+  ]
+}
