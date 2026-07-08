@@ -47,7 +47,7 @@ Send Weather Report
 
 ## Complete Workflow
 
-![Workflow](screenshots/workflow.png)
+![Workflow](screenshots/Workflow.png)
 
 ---
 
@@ -55,7 +55,7 @@ Send Weather Report
 
 Retrieves the latest weather information.
 
-![Weather API](screenshots/weather-api.png)
+![Weather API](screenshots/Weather-api.png)
 
 ---
 
@@ -63,7 +63,7 @@ Retrieves the latest weather information.
 
 Formats the API response into a readable weather report.
 
-![Format Weather Report](screenshots/format-weather-report.png)
+![Format Weather Report](screenshots/Format-Weather-Report.png)
 
 ---
 
@@ -71,7 +71,7 @@ Formats the API response into a readable weather report.
 
 Stores each weather report for future reference.
 
-![Google Sheets](screenshots/append-weather-data-to-google-sheets.png)
+![Google Sheets](screenshots/Append-Weather-Data-to-google-sheets.png)
 
 ---
 
@@ -79,4 +79,4 @@ Stores each weather report for future reference.
 
 Automatically emails the weather report to the recipient.
 
-![Send Weather Report](screenshots/send-weather-report.png)
+![Send Weather Report](screenshots/send-Weather-Report.png)
