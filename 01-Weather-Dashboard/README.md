@@ -1,15 +1,16 @@
 # 🌤️ Weather Dashboard
 
-An automated weather reporting workflow built with n8n.
+An automated weather reporting workflow built with n8n that retrieves live weather data, stores it in Google Sheets, and emails a formatted weather report automatically.
 
 ---
 
 ## Features
 
 - Runs automatically on a schedule
-- Retrieves live weather information
-- Formats weather data
-- Stores weather data in Google Sheets
+- Retrieves live weather data from a Weather API
+- Formats the weather information
+- Saves weather records to Google Sheets
+- Sends a formatted weather report via Gmail
 
 ---
 
@@ -18,20 +19,33 @@ An automated weather reporting workflow built with n8n.
 - n8n
 - Weather API
 - Google Sheets
+- Gmail
 
 ---
 
 ## Workflow
 
-→ Manual Trigger
-→ Get Weather Data
-→ Format Weather Reort
-→ Append Weather data to Google sheet
-→ Save to Google Sheets
+Schedule Trigger
+
+↓
+
+Weather API
+
+↓
+
+Format Weather Report
+
+↓
+
+Append Weather Data to Google Sheets
+
+↓
+
+Send Weather Report
 
 ---
 
-## Workflow Screenshot
+## Complete Workflow
 
 ![Workflow](screenshots/workflow.png)
 
@@ -39,23 +53,30 @@ An automated weather reporting workflow built with n8n.
 
 ## Weather API
 
+Retrieves the latest weather information.
+
 ![Weather API](screenshots/weather-api.png)
 
 ---
 
-## Format Weather data
+## Format Weather Report
 
-![Format Weather data](screenshots/Format Weather data.png)
+Formats the API response into a readable weather report.
+
+![Format Weather Report](screenshots/format-weather-report.png)
 
 ---
 
-## Append Weather data to Google-sheet
+## Append Weather Data to Google Sheets
 
-![Append Weather data to google-sheet](screenshots/Append weather data to google-sheet-api.png)
+Stores each weather report for future reference.
 
+![Google Sheets](screenshots/append-weather-data-to-google-sheets.png)
 
+---
 
+## Send Weather Report
 
-## Google Sheets Result
+Automatically emails the weather report to the recipient.
 
-![Google Sheets Result](screenshots/sheet-result.png)
+![Send Weather Report](screenshots/send-weather-report.png)
