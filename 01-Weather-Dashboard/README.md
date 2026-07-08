@@ -79,4 +79,4 @@ Stores each weather report for future reference.
 
 Automatically emails the weather report to the recipient.
 
-![Send Weather Report](screenshots/send-Weather-Report.png)
+![Send Weather Report](screenshots/Send-Weather-Report.png)
