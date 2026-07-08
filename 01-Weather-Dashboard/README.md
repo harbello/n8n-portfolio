@@ -71,7 +71,7 @@ Formats the API response into a readable weather report.
 
 Stores each weather report for future reference.
 
-![Google Sheets](screenshots/Append-Weather-Data-to-google-sheets.png)
+![Google Sheets](screenshots/Append-Weather-data-to-google-Sheets.png)
 
 ---
 
