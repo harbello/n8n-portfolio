@@ -1,42 +1,61 @@
-# Weather Dashboard
+# 🌤️ Weather Dashboard
 
 An automated weather reporting workflow built with n8n.
+
+---
 
 ## Features
 
 - Runs automatically on a schedule
 - Retrieves live weather information
 - Formats weather data
-- Sends a weather report via Gmail
+- Stores weather data in Google Sheets
+
+---
 
 ## Technologies
 
 - n8n
 - Weather API
-- Gmail
+- Google Sheets
+
+---
 
 ## Workflow
 
-Schedule Trigger
+→ Manual Trigger
+→ Get Weather Data
+→ Format Weather Reort
+→ Append Weather data to Google sheet
+→ Save to Google Sheets
 
-↓
+---
 
-Get Weather Data
+## Workflow Screenshot
 
-↓
+![Workflow](screenshots/workflow.png)
 
-Format Weather Response
+---
 
-↓
+## Weather API
 
-Send Email
+![Weather API](screenshots/weather-api.png)
 
-## Screenshots
+---
 
-See the `screenshots` folder.
+## Format Weather data
 
-## Use Cases
+![Format Weather data](screenshots/Format Weather data.png)
 
-- Daily weather reports
-- Personal dashboard
-- Office automation
+---
+
+## Append Weather data to Google-sheet
+
+![Append Weather data to google-sheet](screenshots/Append weather data to google-sheet-api.png)
+
+
+
+
+## Google Sheets Result
+
+![Google Sheets Result](screenshots/sheet-result.png)
