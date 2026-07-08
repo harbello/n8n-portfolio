@@ -55,7 +55,7 @@ Send Weather Report
 
 Retrieves the latest weather information.
 
-![Weather API](screenshots/Weather-api.png)
+![Weather API](screenshots/weather-api.png)
 
 ---
 
